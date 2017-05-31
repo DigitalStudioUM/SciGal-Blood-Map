@@ -63,7 +63,8 @@
             $(".menu_content").hide();
             $(".menu_tab").removeClass("active");
             $(tabName).show();
-            $(trigger).addClass("active");
+            console.log(trigger);
+            $(trigger.currentTarget).addClass("active");
         }
     </script>
 
