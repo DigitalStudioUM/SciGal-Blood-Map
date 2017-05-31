@@ -11,6 +11,7 @@ body {
 
 #menu{
     position: absolute;
+    overflow: scroll;
     left: 10%;
     top: 5%;
     z-index: 1000;
@@ -20,7 +21,7 @@ body {
 
 #menu{
     background-color: white;
-    
+    border: 2px solid black;
 }
 
 .menu_button{
@@ -52,6 +53,38 @@ body {
     z-index: 1001;
     color: red;
     position: absolute;
-    right: 5px;
-    
+    right: 5px;   
+}
+
+#menu_tabs{
+    list-style: none;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    margin: auto 0;
+}
+
+.menu_tab{
+    background-color: inherit;
+    float: left;
+    border: none;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+.menu_tab:hover{
+    background-color: #ddd;
+}
+
+.menu_tab.active{
+    background-color: #eed;
+}
+
+
+.menu_content {
+    display: none;
 }
