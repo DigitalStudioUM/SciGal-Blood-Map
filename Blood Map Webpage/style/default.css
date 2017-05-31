@@ -1,0 +1,57 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    height: 100%;
+}
+
+#menu{
+    position: absolute;
+    left: 10%;
+    top: 5%;
+    z-index: 1000;
+    width: 80%;
+    height: 90%;
+}
+
+#menu{
+    background-color: white;
+    
+}
+
+.menu_button{
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    top: 1%;
+    right: 1%;
+    width: 4em;
+    height: 4em;
+    text-align: center;
+}
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+    height: 80%;
+}
+
+#more_detail_div {
+    box-shadow: 10px 10px 5px #888888;
+    border: 2px solid;
+    border-radius: 25px;
+    padding: 12px;
+    margin: 10px;
+}
+
+.menu_close_button {
+    z-index: 1001;
+    color: red;
+    position: absolute;
+    right: 5px;
+    
+}
