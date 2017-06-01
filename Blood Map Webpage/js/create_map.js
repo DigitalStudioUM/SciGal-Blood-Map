@@ -16,7 +16,7 @@ function initMap() {
 
 
 
-    console.log(jsonData);
+    //console.log(jsonData);
 
     var i = 0;
     var j = 0;
