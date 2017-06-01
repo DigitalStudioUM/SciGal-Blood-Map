@@ -4,6 +4,7 @@ function toggle_menu() {
     $("#general").show();
     $(".menu_tab").removeClass("active");
     $(".menu_tab").first().addClass("active");
+    $(".menu_button").fadeToggle("fast");
     
 }
 
