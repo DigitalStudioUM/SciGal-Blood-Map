@@ -139,7 +139,6 @@ function initMap() {
 
     }
 
-
     // Color each letter gray. Change the color when the isColorful property
     // is set to true.
     map.data.setStyle(function (feature) {
@@ -156,8 +155,12 @@ function initMap() {
 
     // When the user clicks, set 'isColorful', changing the color of the polygons.
     map.data.addListener('click', function (event) {
-
-        event.feature.setProperty('isColorful', true);
+        console.log(this.tribe);
+        map.data.revertStyle();
+        map.data.overrideStyle(event.feature, {
+            fillColor: "#ff0000"
+        });
+        //event.feature.setProperty('isColorful', true);
 
     });
 
@@ -165,13 +168,16 @@ function initMap() {
     // Call revertStyle() to remove all overrides. This will use the style rules
     // defined in the function passed to setStyle()
     map.data.addListener('mouseover', function (event) {
-        map.data.revertStyle();
+        //map.data.revertStyle();
         map.data.overrideStyle(event.feature, {
             strokeWeight: 8
         });
     });
 
     map.data.addListener('mouseout', function (event) {
-        map.data.revertStyle();
+        //map.data.revertStyle();
+        map.data.overrideStyle(event.feature, {
+            strokeWeight: 1
+        });
     });
 }
