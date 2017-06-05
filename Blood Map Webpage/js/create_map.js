@@ -1,5 +1,8 @@
 var map;
 
+var mapPolygons = [];
+var mapMarkers = [];
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 5,
@@ -99,6 +102,8 @@ function initMap() {
         marker.addListener('click', function () {
             console.log(this.Tribe);
 
+            setSelected(this.Tribe);
+
             var htmlString = "";
 
             htmlString = "Tribe: " + this.Tribe + "<br />";
@@ -125,14 +130,31 @@ function initMap() {
         //console.log('x: ' + center.x + ' y: ' + center.y);
 
 
+        var newPoly = new google.maps.Polygon({
 
+            paths: someCoords,
+            tribe: jsonData.features[i].properties.Tribe,
+            strokeColor: '#343030',
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: '#d0d5dd',
+            fillOpacity: 0.35
 
+        })
 
-
-        map.data.add({
-            geometry: new google.maps.Data.Polygon([someCoords])
+        google.maps.event.addListener(newPoly, 'click', function (event) {
+            setSelected(this.tribe);
+            console.log(event);
+            var p = mapPolygons.filter(v => v.tribe === this.tribe);
+            console.log(p);
+            p.strokeWeight = 8;
+            p.fillColor = '#bbd9b7';
         });
 
+        mapPolygons.push(newPoly);
+
+        newPoly.setMap(map);
+        
         //reset
         someCoords = [];
         hackHack = [];
@@ -180,4 +202,8 @@ function initMap() {
             strokeWeight: 1
         });
     });
+}
+
+function setSelected(tribeName) {
+    console.log("In Set Selected");
 }
