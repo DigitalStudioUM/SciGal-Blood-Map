@@ -1,4 +1,30 @@
+//TODO
+//Set marker to change colour of associated polygon on hover
+//Figure out how best to stop style removal of selected polygon once mouseout occurs
+
 var map;
+
+var mapPolygons = [];
+var mapMarkers = [];
+
+var polygonStyleDeselected = {
+    strokeColor: '#343030',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: '#d0d5dd',
+    fillOpacity: 0.35
+};
+
+var polygonStyleSelected = {
+    strokeWeight: 4.0,
+    fillColor: '#bbd9b7'
+}
+
+var polygonStyleHover = {
+    strokeColor: '#74c16a',
+    fillColor: '#77af70',
+    strokeWeight: 2
+}
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -13,8 +39,6 @@ function initMap() {
     //map.data.loadGeoJson('https://storage.googleapis.com/mapsdevsite/json/google.json');
 
     //map.data.addGeoJson(jsonData);
-
-
 
     //console.log(jsonData);
 
@@ -97,41 +121,44 @@ function initMap() {
         });
 
         marker.addListener('click', function () {
-            console.log(this.Tribe);
-
-            var htmlString = "";
-
-            htmlString = "Tribe: " + this.Tribe + "<br />";
-
-            htmlString = htmlString + "Phonemicised word for blood: " + this.Blood + "<br />";
-
-            if (this.Speaker) {
-                htmlString = htmlString + "Speaker: " + this.Speaker + "</br>";
-
-            }
-
-            if (this.Audio) {
-                htmlString = htmlString + "<audio controls><source src='audio/" + this.Audio + "' type='audio/ogg'>Your browser does not support the audio element.</audio></br>";
-
-            }
-
-            //htmlString = htmlString + "En-us-Galicia-2.ogg";
-
-            document.getElementById("more_detail_div").innerHTML = htmlString;
-
+            markerSelected(this);
         });
 
+        mapMarkers.push(marker);
 
         //console.log('x: ' + center.x + ' y: ' + center.y);
 
 
+        var newPoly = new google.maps.Polygon({
 
+            paths: someCoords,
+            tribe: jsonData.features[i].properties.Tribe,
+            selected: false
 
-
-
-        map.data.add({
-            geometry: new google.maps.Data.Polygon([someCoords])
         });
+        newPoly.setOptions(polygonStyleDeselected);
+
+        google.maps.event.addListener(newPoly, 'click', function (event) {
+            polygonSelected(this);
+        });
+
+        google.maps.event.addListener(newPoly, 'mouseover', function (event) {
+            if (!this.selected) {
+                this.setOptions(polygonStyleHover);
+            }
+        });
+
+        google.maps.event.addListener(newPoly, 'mouseout', function (event) {
+            if (!this.selected) {
+                this.setOptions(polygonStyleDeselected);
+            }
+        });
+
+        mapPolygons.push(newPoly);
+
+
+
+        newPoly.setMap(map);
 
         //reset
         someCoords = [];
@@ -180,4 +207,53 @@ function initMap() {
             strokeWeight: 1
         });
     });
+}
+
+function updateInfoPanel(marker) {
+    var htmlString = "";
+
+    htmlString = "Tribe: " + marker.Tribe + "<br />";
+
+    htmlString = htmlString + "Phonemicised word for blood: " + marker.Blood + "<br />";
+
+    if (marker.Speaker) {
+        htmlString = htmlString + "Speaker: " + marker.Speaker + "</br>";
+
+    }
+
+    if (marker.Audio) {
+        htmlString = htmlString + "<audio controls><source src='audio/" + marker.Audio + "' type='audio/ogg'>Your browser does not support the audio element.</audio></br>";
+
+    }
+
+    //htmlString = htmlString + "En-us-Galicia-2.ogg";
+
+    document.getElementById("more_detail_div").innerHTML = htmlString;
+}
+
+
+function polygonSelected(poly) {
+    poly.selected = true;
+
+    var markerOfTribe = mapMarkers.filter(v => v.Tribe === poly.tribe);
+    //markerSelected(markerOfTribe[0]);
+    console.log("Marker:" + markerOfTribe);
+    updateInfoPanel(markerOfTribe[0]);
+
+    console.log(event);
+    mapPolygons.forEach(function (poly) {
+        poly.setOptions(polygonStyleDeselected);
+    });
+    var p = mapPolygons.filter(v => v.tribe === poly.tribe);
+    console.log(p);
+    p[0].setOptions(polygonStyleSelected);
+}
+
+function markerSelected(marker) {
+    var polygonOfTribe = mapPolygons.filter(v => v.tribe == marker.Tribe);
+    polygonSelected(polygonOfTribe[0]);
+    //console.log(marker);
+    updateInfoPanel(marker);
+
+
 }
