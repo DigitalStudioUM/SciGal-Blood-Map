@@ -100,7 +100,17 @@ function initMap() {
         	var anImage = 'images/' + jsonData.features[i].properties.Tribe + '.png';
         */
 
-        var AnImage = 'images/names/' + jsonData.features[i].properties.Tribe + '.png';
+        var tribeName = "";
+
+        if (jsonData.features[i].properties.Tribe) {
+            tribeName = jsonData.features[i].properties.Tribe;
+        } else {
+            tribeName = jsonData.features[i].properties.TindaleTribe;
+        }
+
+        var AnImage = 'images/names/' + tribeName + '.png';
+
+
 
 
         //https://developers.google.com/maps/documentation/javascript/symbols
@@ -114,7 +124,7 @@ function initMap() {
             map: map,
             icon: AnImage,
             title: jsonData.features[i].properties.Tribe,
-            Tribe: jsonData.features[i].properties.Tribe,
+            Tribe: tribeName,
             Speaker: jsonData.features[i].properties.Speaker,
             Audio: jsonData.features[i].properties.Audio,
             Blood: jsonData.features[i].properties.Blood
@@ -132,7 +142,7 @@ function initMap() {
         var newPoly = new google.maps.Polygon({
 
             paths: someCoords,
-            tribe: jsonData.features[i].properties.Tribe,
+            tribe: tribeName,
             selected: false
 
         });
@@ -233,27 +243,23 @@ function updateInfoPanel(marker) {
 
 
 function polygonSelected(poly) {
-    poly.selected = true;
+    poly.selected = true; //Set selected marker to true
 
+    //Get associated marker based on tribe of polygon
     var markerOfTribe = mapMarkers.filter(v => v.Tribe === poly.tribe);
-    //markerSelected(markerOfTribe[0]);
-    console.log("Marker:" + markerOfTribe);
+    //Call updateInfo to update information panel with appriate sources
     updateInfoPanel(markerOfTribe[0]);
 
-    console.log(event);
+    //Set all polygons to deseleted style
     mapPolygons.forEach(function (poly) {
         poly.setOptions(polygonStyleDeselected);
     });
-    var p = mapPolygons.filter(v => v.tribe === poly.tribe);
-    console.log(p);
-    p[0].setOptions(polygonStyleSelected);
+    //Set this polygon to selected style
+    poly.setOptions(polygonStyleSelected);
 }
 
 function markerSelected(marker) {
     var polygonOfTribe = mapPolygons.filter(v => v.tribe == marker.Tribe);
     polygonSelected(polygonOfTribe[0]);
-    //console.log(marker);
     updateInfoPanel(marker);
-
-
 }
