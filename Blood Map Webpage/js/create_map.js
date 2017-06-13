@@ -133,30 +133,30 @@ function initMap() {
 
             paths: someCoords,
             tribe: jsonData.features[i].properties.Tribe,
+            selected: false
 
-        })
+        });
         newPoly.setOptions(polygonStyleDeselected);
 
         google.maps.event.addListener(newPoly, 'click', function (event) {
-            polygonSelected(event);
+            polygonSelected(this);
         });
 
         google.maps.event.addListener(newPoly, 'mouseover', function (event) {
-            var p = mapPolygons.filter(v => v.tribe === this.tribe);
-            p[0].setOptions(polygonStyleHover);
-
-
+            if (!this.selected) {
+                this.setOptions(polygonStyleHover);
+            }
         });
 
         google.maps.event.addListener(newPoly, 'mouseout', function (event) {
-            var p = mapPolygons.filter(v => v.tribe === this.tribe);
-            p[0].setOptions(polygonStyleDeselected);
-
+            if (!this.selected) {
+                this.setOptions(polygonStyleDeselected);
+            }
         });
 
-
-
         mapPolygons.push(newPoly);
+
+
 
         newPoly.setMap(map);
 
@@ -209,25 +209,7 @@ function initMap() {
     });
 }
 
-
-function polygonSelected(poly) {
-    var markerOfTribe = mapMarkers.filter(v => v.Tribe === poly.tribe);
-    markerSelected(markerOfTribe[0]);
-
-    console.log(event);
-    mapPolygons.forEach(function (poly) {
-        poly.setOptions(polygonStyleDeselected);
-    });
-    var p = mapPolygons.filter(v => v.tribe === poly.tribe);
-    console.log(p);
-    p[0].setOptions(polygonStyleSelected);
-}
-
-function markerSelected(marker) {
-    var polygonOfTribe = mapPolygons.filter(v => v.tribe == marker.Tribe);
-    polygonSelected(polygonOfTribe[0]);
-    console.log(marker);
-
+function updateInfoPanel(marker) {
     var htmlString = "";
 
     htmlString = "Tribe: " + marker.Tribe + "<br />";
@@ -247,5 +229,31 @@ function markerSelected(marker) {
     //htmlString = htmlString + "En-us-Galicia-2.ogg";
 
     document.getElementById("more_detail_div").innerHTML = htmlString;
+}
+
+
+function polygonSelected(poly) {
+    poly.selected = true;
+
+    var markerOfTribe = mapMarkers.filter(v => v.Tribe === poly.tribe);
+    //markerSelected(markerOfTribe[0]);
+    console.log("Marker:" + markerOfTribe);
+    updateInfoPanel(markerOfTribe[0]);
+
+    console.log(event);
+    mapPolygons.forEach(function (poly) {
+        poly.setOptions(polygonStyleDeselected);
+    });
+    var p = mapPolygons.filter(v => v.tribe === poly.tribe);
+    console.log(p);
+    p[0].setOptions(polygonStyleSelected);
+}
+
+function markerSelected(marker) {
+    var polygonOfTribe = mapPolygons.filter(v => v.tribe == marker.Tribe);
+    polygonSelected(polygonOfTribe[0]);
+    //console.log(marker);
+    updateInfoPanel(marker);
+
 
 }
