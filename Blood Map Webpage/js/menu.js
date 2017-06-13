@@ -6,6 +6,8 @@ function toggle_menu() {
     $(".menu_tab").removeClass("active");
     $(".menu_tab").first().addClass("active");
     $(".menu_button").fadeToggle("fast");
+    $(".blood_button").fadeToggle("fast");
+    
 }
 
 function open_tab(trigger, tabName) {
@@ -15,3 +17,7 @@ function open_tab(trigger, tabName) {
     $(trigger.currentTarget).addClass("active");
 }
 
+function toggle_blood(){
+    bloodMarkersShowing = !bloodMarkersShowing;
+    updateBloodMarkers();
+}

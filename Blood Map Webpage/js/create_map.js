@@ -26,6 +26,11 @@ var polygonStyleHover = {
     strokeWeight: 2
 }
 
+var bloodMarkersShowing = false;
+var zoomLevelAbstraction = 6;
+
+var zoomedOutImage = "images/reddot.jpg";
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 5,
@@ -109,8 +114,7 @@ function initMap() {
         }
 
         var AnImage = 'images/names/' + tribeName + '.png';
-
-
+        var bloodImage = 'images/names_blood/' + tribeName + '-blood.png';
 
 
         //https://developers.google.com/maps/documentation/javascript/symbols
@@ -123,6 +127,8 @@ function initMap() {
             },
             map: map,
             icon: AnImage,
+            tribeIcon: AnImage,
+            bloodIcon: bloodImage,
             title: jsonData.features[i].properties.Tribe,
             Tribe: tribeName,
             Speaker: jsonData.features[i].properties.Speaker,
@@ -217,6 +223,17 @@ function initMap() {
             strokeWeight: 1
         });
     });
+
+    map.addListener('zoom_changed', function () {
+        //        console.log(map.getZoom());
+        if (map.getZoom() < zoomLevelAbstraction) {
+            mapMarkers.forEach(function (m) {
+                m.setIcon(zoomedOutImage);
+            })
+        } else {
+            updateBloodMarkers();
+        }
+    });
 }
 
 function updateInfoPanel(marker) {
@@ -262,4 +279,21 @@ function markerSelected(marker) {
     var polygonOfTribe = mapPolygons.filter(v => v.tribe == marker.Tribe);
     polygonSelected(polygonOfTribe[0]);
     updateInfoPanel(marker);
+}
+
+function updateBloodMarkers() {
+    mapMarkers.forEach(function (m) {
+        if (map.getZoom() < zoomLevelAbstraction) {
+            m.setIcon(zoomedOutImage);
+        } else {
+
+            if (bloodMarkersShowing) {
+                m.setIcon(m.bloodIcon);
+            } else {
+
+                m.setIcon(m.tribeIcon);
+            }
+        }
+    });
+
 }

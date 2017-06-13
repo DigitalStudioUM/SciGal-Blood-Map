@@ -33,7 +33,7 @@ body {
     top: 1%;
     right: 1%;
     width: 4em;
-    height: 4em;
+    height: 2em;
     text-align: center;
 }
 
@@ -113,4 +113,16 @@ body {
     height: 100%;
     position: absolute;
     z-index: 900;
+}
+
+.blood_button {
+    display: none;
+    position: absolute;
+    z-index: 950;
+    background-color: white;
+    top: 8%;
+    right: 1%;
+    width: 4em;
+    height: 2em;
+    text-align: center;
 }
