@@ -13,7 +13,7 @@ var polygonStyleDeselected = {
     strokeOpacity: 0.8,
     strokeWeight: 1,
     fillColor: '#d0d5dd',
-    fillOpacity: 0.1
+    fillOpacity: 0
 };
 
 var polygonStyleSelected = {
@@ -30,7 +30,7 @@ var polygonStyleHover = {
 }
 
 var bloodMarkersShowing = false;
-var zoomLevelAbstraction = 6;
+var zoomLevelAbstraction = 5;
 
 var zoomedOutImage = "images/reddot.jpg";
 
@@ -38,6 +38,10 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 5,
         styles: mapStyle,
+        mapTypeId: 'hybrid',
+        disableDefaultUI: true,
+        zoomControl: true,
+
         center: {
             lat: -28,
             lng: 137
@@ -117,8 +121,14 @@ function initMap() {
             tribeName = jsonData.features[i].properties.TindaleTribe;
         }
 
-        var AnImage = 'images/names/' + tribeName + '.png';
-        var bloodImage = 'images/names_blood/' + tribeName + '-blood.png';
+        var tribeImageZoom5 = 'images/names/12/' + tribeName + '.png';
+        var tribeImageZoom6 = 'images/names/14/' + tribeName + '.png';
+        var tribeImageZoom7 = 'images/names/18/' + tribeName + '.png';
+        var tribeImageZoom8 = 'images/names/20/' + tribeName + '.png';
+        var bloodImageZoom5 = 'images/names_blood/12/' + tribeName + '-blood.png';
+        var bloodImageZoom6 = 'images/names_blood/14/' + tribeName + '-blood.png';
+        var bloodImageZoom7 = 'images/names_blood/18/' + tribeName + '-blood.png';
+        var bloodImageZoom8 = 'images/names_blood/20/' + tribeName + '-blood.png';
 
 
         //https://developers.google.com/maps/documentation/javascript/symbols
@@ -130,9 +140,15 @@ function initMap() {
 
             },
             map: map,
-            icon: AnImage,
-            tribeIcon: AnImage,
-            bloodIcon: bloodImage,
+            icon: tribeImageZoom5,
+            tribeIconZoom5: tribeImageZoom5,
+            tribeIconZoom6: tribeImageZoom6,
+            tribeIconZoom7: tribeImageZoom7,
+            tribeIconZoom8: tribeImageZoom8,
+            bloodIconZoom5: bloodImageZoom5,
+            bloodIconZoom6: bloodImageZoom6,
+            bloodIconZoom7: bloodImageZoom7,
+            bloodIconZoom8: bloodImageZoom8,
             title: jsonData.features[i].properties.Tribe,
             Tribe: tribeName,
             Speaker: jsonData.features[i].properties.Speaker,
@@ -241,9 +257,9 @@ function initMap() {
 
     updateBloodMarkers();
     infoWindow = new google.maps.InfoWindow({
-          content: "",
-          maxWidth: 400
-        });
+        content: "",
+        maxWidth: 400
+    });
 }
 
 
@@ -265,20 +281,20 @@ function updateInfoPanel(marker) {
     }
 
     //htmlString = htmlString + "En-us-Galicia-2.ogg";
-    if (infoWindow){
-        
-    infoWindow.close();
-    }
-    
-    newWindow = new google.maps.InfoWindow({
-          content: htmlString,
-          maxWidth: 400
-        });
+    if (infoWindow) {
 
-     newWindow.open(map, marker);
-    
+        infoWindow.close();
+    }
+
+    newWindow = new google.maps.InfoWindow({
+        content: htmlString,
+        maxWidth: 400
+    });
+
+    newWindow.open(map, marker);
+
     infoWindow = newWindow;
-    
+
     //document.getElementById("more_detail_div").innerHTML = htmlString;
 }
 
@@ -310,12 +326,34 @@ function updateBloodMarkers() {
         if (map.getZoom() < zoomLevelAbstraction) {
             m.setIcon(zoomedOutImage);
         } else {
-
             if (bloodMarkersShowing) {
-                m.setIcon(m.bloodIcon);
+                var zoomLevel = map.getZoom();
+                if (zoomLevel <= 5) {
+                    m.setIcon(m.bloodIconZoom5);
+                }
+                if (zoomLevel == 6) {
+                    m.setIcon(m.bloodIconZoom6);
+                }
+                if (zoomLevel == 7) {
+                    m.setIcon(m.bloodIconZoom7);
+                }
+                if (zoomLevel == 8) {
+                    m.setIcon(m.bloodIconZoom8);
+                }
             } else {
-
-                m.setIcon(m.tribeIcon);
+                var zoomLevel = map.getZoom();
+                if (zoomLevel <= 5) {
+                    m.setIcon(m.tribeIconZoom5);
+                }
+                if (zoomLevel == 6) {
+                    m.setIcon(m.tribeIconZoom6);
+                }
+                if (zoomLevel == 7) {
+                    m.setIcon(m.tribeIconZoom7);
+                }
+                if (zoomLevel == 8) {
+                    m.setIcon(m.tribeIconZoom8);
+                }
             }
         }
     });
