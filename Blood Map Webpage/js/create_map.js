@@ -4,6 +4,7 @@
 
 var map;
 
+var infoWindow;
 var mapPolygons = [];
 var mapMarkers = [];
 
@@ -239,7 +240,12 @@ function initMap() {
     });
 
     updateBloodMarkers();
+    infoWindow = new google.maps.InfoWindow({
+          content: "",
+          maxWidth: 400
+        });
 }
+
 
 function updateInfoPanel(marker) {
     var htmlString = "";
@@ -259,8 +265,21 @@ function updateInfoPanel(marker) {
     }
 
     //htmlString = htmlString + "En-us-Galicia-2.ogg";
+    if (infoWindow){
+        
+    infoWindow.close();
+    }
+    
+    newWindow = new google.maps.InfoWindow({
+          content: htmlString,
+          maxWidth: 400
+        });
 
-    document.getElementById("more_detail_div").innerHTML = htmlString;
+     newWindow.open(map, marker);
+    
+    infoWindow = newWindow;
+    
+    //document.getElementById("more_detail_div").innerHTML = htmlString;
 }
 
 

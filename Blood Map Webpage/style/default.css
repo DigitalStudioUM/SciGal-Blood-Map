@@ -42,7 +42,7 @@ body {
        * element that contains the map. */
 
 #map {
-    height: 80%;
+    height: 100%;
 }
 
 #more_detail_div {
