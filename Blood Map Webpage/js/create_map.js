@@ -12,17 +12,19 @@ var polygonStyleDeselected = {
     strokeOpacity: 0.8,
     strokeWeight: 1,
     fillColor: '#d0d5dd',
-    fillOpacity: 0.35
+    fillOpacity: 0.1
 };
 
 var polygonStyleSelected = {
     strokeWeight: 4.0,
-    fillColor: '#bbd9b7'
+    fillColor: '#bbd9b7',
+    fillOpacity: 0.9
 }
 
 var polygonStyleHover = {
     strokeColor: '#74c16a',
     fillColor: '#77af70',
+    fillOpacity: 0.9,
     strokeWeight: 2
 }
 
@@ -34,6 +36,7 @@ var zoomedOutImage = "images/reddot.jpg";
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 5,
+        styles: mapStyle,
         center: {
             lat: -28,
             lng: 137
@@ -234,6 +237,8 @@ function initMap() {
             updateBloodMarkers();
         }
     });
+
+    updateBloodMarkers();
 }
 
 function updateInfoPanel(marker) {
