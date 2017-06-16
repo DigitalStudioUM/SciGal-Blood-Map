@@ -266,19 +266,20 @@ function initMap() {
 function updateInfoPanel(marker) {
     var htmlString = "";
 
-    htmlString = "Tribe: " + marker.Tribe + "<br />";
+    htmlString = "<span class='subtitle'>Tribe</span><h1 class='panel-heading'>" + marker.Tribe + "</h1>";
 
-    htmlString = htmlString + "Phonemicised word for blood: " + marker.Blood + "<br />";
-
-    if (marker.Speaker) {
-        htmlString = htmlString + "Speaker: " + marker.Speaker + "</br>";
-
+    if (marker.Blood){
+    htmlString += "<span class='subtitle'>Blood translation (phonemicised)</span><h1 class='panel-heading'>" + marker.Blood + "</h1>";
     }
-
     if (marker.Audio) {
-        htmlString = htmlString + "<audio controls><source src='audio/" + marker.Audio + "' type='audio/ogg'>Your browser does not support the audio element.</audio></br>";
+        htmlString += "<audio controls><source src='audio/" + marker.Audio + "' type='audio/ogg'>Your browser does not support the audio element.</audio></br>";
+    }
+    
+    if (marker.Speaker) {
+        htmlString += "<span class='subtitle'>Spoken By: "+marker.Speaker+"</span>";
 
     }
+    
 
     //htmlString = htmlString + "En-us-Galicia-2.ogg";
     if (infoWindow) {

@@ -5,6 +5,23 @@ body {
     padding: 0;
 }
 
+body{
+font-family: 'Raleway', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Open Sans', sans-serif;
+}
+
+span.subtitle{
+    text-transform: uppercase;
+}
+
+.panel-heading{
+    margin-top: 0px;
+    padding-top: 0;
+}
+
 #container {
     height:  90%;
 }
