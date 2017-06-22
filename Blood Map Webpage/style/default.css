@@ -75,8 +75,6 @@ span.subtitle {
     margin: 10px;
 }
 
-
-
 #menu_tabs {
     list-style: none;
     overflow: hidden;
@@ -150,10 +148,10 @@ footer {
     width: 100%;
     background-color: white;
     text-align: center;
-font-size: 1.5em;
+    font-size: 1.5em;
 }
 
-.footer-image{
+.footer-image {
     float: right;
     height: 75px;
     width: auto;
@@ -161,25 +159,29 @@ font-size: 1.5em;
     margin-top: 1em;
 }
 
-.tab-pane{
+.tab-pane {
     max-height: 750px;
     min-height: 750px;
     overflow-y: scroll;
 }
 
+
 /* Dirty hacks to change colours. Should really chanhge these in SASS and compile */
-.nav-pills>li>a{
+
+.nav-pills>li>a {
     color: black;
     background-color: white;
 }
 
-.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
- color: white;
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    color: white;
     background-color: #526946;
 }
 
-.nav-pills > li > a {
-  border-radius: 4px 4px 0 0 ;
+.nav-pills>li>a {
+    border-radius: 4px 4px 0 0;
 }
 
 .menu_close_button {
@@ -188,6 +190,7 @@ font-size: 1.5em;
     font-size: 2em;
     cursor: pointer;
 }
+
 .menu_close_link {
     background-color: rgba(0, 0, 0, 0) !important;
     color: red !important;
