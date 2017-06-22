@@ -113,7 +113,7 @@ span.subtitle {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: slategrey;
+    background-color: hsl(354, 100%, 14%);
     opacity: 0.7;
     z-index: 900;
 }
@@ -171,6 +171,8 @@ footer {
 .nav-pills>li>a {
     color: black;
     background-color: white;
+    padding-left: 5px;
+    padding-right: 5px
 }
 
 .nav-pills>li.active>a,
@@ -194,4 +196,14 @@ footer {
 .menu_close_link {
     background-color: rgba(0, 0, 0, 0) !important;
     color: red !important;
+}
+
+.logo-menu {
+    padding-top: 150px;
+    text-align: center;
+}
+
+.logo-menu>img{
+    background-color: white;
+    padding: 5px;
 }
