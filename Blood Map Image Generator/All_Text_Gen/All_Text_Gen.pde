@@ -4,7 +4,12 @@ JSONArray bloodnames;
 PGraphics textCanvas;
 PFont opensans;
 
+//Size of text
 int tSize = 12;
+
+//Colours for fill and stroke
+color fillColour = color(255, 255, 255);
+color outlineColour = color(0, 0, 0);
 
 boolean drawTribeWords = true;
 boolean drawBloodWords = true;
@@ -14,13 +19,20 @@ boolean withShadow = false;
 //Offset for text to keep it in centre of image when adding a shadow. Also used for the offset of the shadow.
 int textOffsetForShadow = 5;
 
+
+//If true adds icon to end of word
+boolean addIcon = false;
+PImage speakerImage;
+
 void setup() {
   size(400, 400);
   textAlign(CENTER, CENTER);
   opensans = createFont("Open Sans Bold", tSize);
-textFont(opensans);
+  textFont(opensans);
 
   bloodnames = loadJSONArray("bloodwords.json");
+  
+  speakerImage = loadImage("speaker.png");
 
   if (!withShadow) {
     textOffsetForShadow = 0;
@@ -81,20 +93,61 @@ void DrawWord(String prefix, String word, String filename) {
   //textCanvas.background(255,255,0);
 
   if (withShadow) {
-    textCanvas.fill(255, 150);
+    textCanvas.fill(outlineColour, 150);
     textCanvas.text(word, 0, 0);
 
     textCanvas.filter(BLUR, 3);
   }
 
-  textCanvas.fill(255);
+  textCanvas.fill(outlineColour);
   for (int x = -1; x < 2; x++) {
     textCanvas.text(word, x-textOffsetForShadow, 0-textOffsetForShadow);
     textCanvas.text(word, 0-textOffsetForShadow, x-textOffsetForShadow);
   }
 
-  textCanvas.fill(0);
+  textCanvas.fill(fillColour);
   textCanvas.text(word, 0-textOffsetForShadow, 0-textOffsetForShadow);
+
+  textCanvas.endDraw();
+  textCanvas.save(prefix + filename + ".png");
+}
+
+void DrawWordWithAudio(String prefix, String word, String filename) {
+  textSize(tSize+3);
+  int nameWidth = ceil( textWidth(word))+tSize;
+  if (withShadow) {
+    textCanvas = createGraphics(nameWidth+textOffsetForShadow, 35+textOffsetForShadow);
+  } else {
+    textCanvas = createGraphics(nameWidth, 35);
+  }
+  textCanvas.smooth();
+  textCanvas.beginDraw();
+  textCanvas.textSize(tSize);
+  textCanvas.textAlign(CENTER, CENTER);
+  textCanvas.textFont(opensans);
+  textCanvas.pushMatrix();
+  textCanvas.translate((textCanvas.width-tSize)/2, textCanvas.height/2);
+
+  //textCanvas.background(255,255,0);
+
+  if (withShadow) {
+    textCanvas.fill(outlineColour, 150);
+    textCanvas.text(word, 0, 0);
+
+    textCanvas.filter(BLUR, 3);
+  }
+
+  textCanvas.fill(outlineColour);
+  for (int x = -1; x < 2; x++) {
+    textCanvas.text(word, x-textOffsetForShadow, 0-textOffsetForShadow);
+    textCanvas.text(word, 0-textOffsetForShadow, x-textOffsetForShadow);
+  }
+
+  textCanvas.fill(fillColour);
+  textCanvas.text(word, 0-textOffsetForShadow, 0-textOffsetForShadow);
+  textCanvas.popMatrix();
+  //Draw image after word at size of tSize.
+  textCanvas.image(speakerImage,textCanvas.width-tSize, textCanvas.height/2, tSize, tSize);
 
   textCanvas.endDraw();
   textCanvas.save(prefix + filename + ".png");
