@@ -159,6 +159,25 @@ function initMap() {
         marker.addListener('click', function () {
             markerSelected(this);
         });
+        
+        marker.addListener('mouseover', function(){
+            
+            var p = getPolyFromTribeName(marker.Tribe);
+            if (!p.selected) {
+                p.setOptions(polygonStyleHover);
+            }
+            
+        });
+        
+        marker.addListener('mouseout', function(){
+            
+            var p = getPolyFromTribeName(marker.Tribe);
+            if (!p.selected) {
+                this.setOptions(polygonStyleDeselected);
+            }
+            
+        });
+        
 
         mapMarkers.push(marker);
 
@@ -359,4 +378,9 @@ function updateBloodMarkers() {
         }
     });
 
+}
+
+function getPolyFromTribeName(tribe){
+    var polygonOfTribe = mapPolygons.filter(v => v.tribe == tribe);
+    return polygonOfTribe;
 }
