@@ -285,10 +285,10 @@ function initMap() {
 function updateInfoPanel(marker) {
     var htmlString = "";
 
-    htmlString = "<span class='subtitle'>Tribe</span><h1 class='panel-heading'>" + marker.Tribe + "</h1>";
+    htmlString = "<span class='subtitle'>Language</span><h1 class='panel-heading'>" + marker.Tribe + "</h1>";
 
     if (marker.Blood){
-    htmlString += "<span class='subtitle'>Blood translation (phonemicised)</span><h1 class='panel-heading'>" + marker.Blood + "</h1>";
+    htmlString += "<span class='subtitle'>Blood translation</span><h1 class='panel-heading'>" + marker.Blood + "</h1>";
     }
     if (marker.Audio) {
         htmlString += "<audio controls><source src='audio/" + marker.Audio + "' type='audio/ogg'>Your browser does not support the audio element.</audio></br>";

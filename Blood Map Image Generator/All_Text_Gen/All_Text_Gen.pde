@@ -11,6 +11,7 @@ int tSize = 20;
 color fillColour = color(0);
 color outlineColour = color(255);
 
+//Booleans to draw blood, language (tribe) and if there should be an audio icon after it or not.
 boolean drawTribeWords = true;
 boolean drawBloodWords = true;
 boolean drawSpeakerIcon = true;
@@ -19,7 +20,6 @@ boolean drawSpeakerIcon = true;
 boolean withShadow = false;
 //Offset for text to keep it in centre of image when adding a shadow. Also used for the offset of the shadow.
 int textOffsetForShadow = 5;
-
 
 PImage speakerImage;
 

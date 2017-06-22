@@ -28,7 +28,7 @@ span.subtitle {
 }
 
 #container {
-    height: 90%;
+    height: 95%;
 }
 
 #menu {
@@ -120,7 +120,6 @@ span.subtitle {
     z-index: 900;
 }
 
-/* Modify this margin-left position to center menu once we know the final resolution of the screens it will show on! */
 #menu-container {
     width: 100%;
     position: absolute;
@@ -151,8 +150,8 @@ footer {
     width: 100%;
     background-color: white;
     text-align: center;
-        
-font-size: 2em;}
+font-size: 1.5em;
+}
 
 .footer-image{
     float: right;
